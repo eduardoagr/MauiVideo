@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiVideo.Views.DetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:vm="clr-namespace:MauiVideo.ViewModels"
+    Title="Movie Detals"
+    ios:Page.UseSafeArea="False"
+    x:DataType="vm:DetailPageViewModel">
+
+    <ScrollView>
+        <Grid
+            Margin="20"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="10">
+            <StackLayout
+                Grid.Column="1"
+                Spacing="10">
+
+                <!--  Movie Title  -->
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Title"
+                    HorizontalTextAlignment="Start"
+                    Text="{Binding Movie.title}" />
+
+                <!--  bulletText  -->
+                <Label
+                    Grid.Column="1"
+                    Text="{Binding Movie.bulletText}" />
+
+                <!--  Movie Description  -->
+                <Label Text="{Binding Movie.description}" />
+
+
+                <!--  Running Time  -->
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="0,10,0,0"
+                    FontAttributes="Bold"
+                    Text="Running Time:" />
+
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Text="{Binding Movie.runningTime, StringFormat='{}{0} minutes'}" />
+
+                <!--  Related Movies (if available)  -->
+                <Label
+                    FontAttributes="Bold"
+                    Text="Related Movies" />
+                <CollectionView
+                    HeightRequest="100"
+                    ItemsSource="{Binding Movie.related}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding .}" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </StackLayout>
+
+            <!--  Movie Art  -->
+            <Image
+                Grid.Row="1"
+                Grid.RowSpan="6"
+                Aspect="AspectFit"
+                HeightRequest="{OnIdiom Desktop=500,
+                                        Phone=200}"
+                Source="{Binding Movie.artUrl}" />
+        </Grid>
+    </ScrollView>
+</ContentPage>
